@@ -94,8 +94,7 @@
 	
 	listRs = stmt2.executeQuery(); //현재 타겟달의 모든 일기가 들어가있다
 	//listRs.first();   //비교값 일치시 다음 비교를 위해서 커서로 처음으로 돌린다.
-	
-	
+
 
 %>
 <!DOCTYPE html>
