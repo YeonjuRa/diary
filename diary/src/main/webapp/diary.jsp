@@ -2,6 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%
 	//로그인 분기 -> 인증 분기
 	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "OFF" -> redirect(loginForm.jsp)
@@ -97,6 +98,7 @@
 
 
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,6 +208,7 @@
 	<div class="text-end me-2 pt-2 "><a href="./addDiaryForm.jsp">일기 쓰기!</a></div>
 	<div class="text-end me-2"><a href="./diary.jsp">캘린더 보기</a></div>
 	<div class="text-end me-2"><a href="./diaryList.jsp">리스트로 보기</a></div>
+	<div class="text-end me-2"><a href="./lunchOne.jsp">오늘 점심 투표하기!</a></div>
 	<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 	
 	</div>
@@ -273,6 +276,7 @@
 					<span><%=listRs.getString("feeling")%></span>
 					<a href='/diary/diaryOne.jsp?diaryDate=<%=listRs.getString("diaryDate")%>'>
 					<img class="imgIcon" src="./icon.png"></a>
+				
 					</div>
 	
 	

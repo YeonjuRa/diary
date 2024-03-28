@@ -31,23 +31,15 @@
 		return;  // off 시 코드 진행 끝내기  -> ex)메서드 끝낼때 return 사용
 	}
 		
-	/* //글 입력 sql
-	String checkDate = request.getParameter("checkDate");
-	if(checkDate == null){ //그냥 이파일을 실행할경우 ""
-		checkDate = "";
-	}
-	String ck = request.getParameter("ck"); //ck 값은 null
-	if(ck == null){
-		ck="";
-	}
-	//ck=T 일때만 날짜칸에 날짜가 자동으로 삽입
+
+	//날짜 목록 전체 출력
+	String lunchSql2 = "select lunch_date lunchDate, menu,create_date,comment from lunch order by lunch_date desc";
+	PreparedStatement lunchStmt2 = null;
+	ResultSet lunchRs2 = null;
+	lunchStmt2 = con.prepareStatement(lunchSql2);
+	System.out.println(lunchStmt2);
+	lunchRs2 = lunchStmt2.executeQuery();
 	
-	String msg = "";
-	if(ck.equals("T")){
-		msg = "입력 가능한 날짜입니다.";
-	}else if(ck.equals("F")){
-		msg = "일기가 이미 존재합니다.";
-	} */
 
 %>
 <%
@@ -60,6 +52,7 @@
 	
 
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,8 +103,10 @@ body{
 
 	}
 	td{
-		color:white;
-		padding-left:20px;
+		color:black;
+		
+		border-bottom:1px solid black;
+
 	
 	}
 	
@@ -143,8 +138,9 @@ body{
 	<!--사이드 바 종료  -->
 	
 	<div class="col-9 justify-content-center mt-2 ">
-
-	<h1>statsLunch</h1>
+	<div style="background-color:#1D274D; color:white; padding:10px; border-radius:7px;">
+	<h2 class="text-center">점심통계</h2>
+	</div>
 	<%	//숫자 먼저 뿌리고 -> 메뉴 이름 출력 -> 커서는 제자리
 			int maxHeight = 300;
 			double totalCnt = 0;
@@ -154,10 +150,9 @@ body{
 				}
 				statsRs.beforeFirst();
 	%>
-	<div>전체 투표수 : <%=(int)totalCnt%></div>
-	<div>
-	
-	<table>
+	<div class="mb-5 mt-5 ">전체 투표수 : <%=(int)totalCnt%></div>
+	<div class="text-center ps-5"  style='width:50%; float:left;'>
+	<table >
 		<tr>
 			<%	
 				String [] c = {"#FF0000","#FE2EF7","#58FAF4","#2EFE64","#F4FA58"};
@@ -187,6 +182,34 @@ body{
 	</table>
 	
 	</div>
+	<div style='width:50%; float:right;'>
+	<table class="class-start">
+					<tr>
+						<td><b>날짜</b></td>
+						<td><b>메뉴</b></td>
+						<td><b>한줄평</b></td>
+						
+					</tr>
+		<%
+			while(lunchRs2.next()){
+		%>
+				
+					<tr>
+						<td><%=lunchRs2.getString("lunchDate")%></td>
+						<td>&nbsp;<%=lunchRs2.getString("menu")%></td>
+						<td><%=lunchRs2.getString("comment")%></td>
+						
+					</tr>
+		
+		<% 	
+			}
+		
+		
+		%>
+	</table>
+	
+	</div>
+	
 	
 	</div>
 	</div>

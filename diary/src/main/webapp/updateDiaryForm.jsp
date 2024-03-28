@@ -31,23 +31,6 @@
 		return;  // off 시 코드 진행 끝내기  -> ex)메서드 끝낼때 return 사용
 	}
 		
-	/* //글 입력 sql
-	String checkDate = request.getParameter("checkDate");
-	if(checkDate == null){ //그냥 이파일을 실행할경우 ""
-		checkDate = "";
-	}
-	String ck = request.getParameter("ck"); //ck 값은 null
-	if(ck == null){
-		ck="";
-	}
-	//ck=T 일때만 날짜칸에 날짜가 자동으로 삽입
-	
-	String msg = "";
-	if(ck.equals("T")){
-		msg = "입력 가능한 날짜입니다.";
-	}else if(ck.equals("F")){
-		msg = "일기가 이미 존재합니다.";
-	} */
 
 %>
 <%
