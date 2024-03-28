@@ -56,7 +56,7 @@
 
 %>
 <%
-	
+	String fromBoard = request.getParameter("lunchDate");
 	//메뉴 확인 sql
 	String lunchSql = "select lunch_date lunchDate, menu,create_date,comment from lunch where lunch_date=?";
 	PreparedStatement lunchStmt = null;

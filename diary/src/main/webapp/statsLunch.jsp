@@ -32,13 +32,7 @@
 	}
 		
 
-	//날짜 목록 전체 출력
-	String lunchSql2 = "select lunch_date lunchDate, menu,create_date,comment from lunch order by lunch_date desc";
-	PreparedStatement lunchStmt2 = null;
-	ResultSet lunchRs2 = null;
-	lunchStmt2 = con.prepareStatement(lunchSql2);
-	System.out.println(lunchStmt2);
-	lunchRs2 = lunchStmt2.executeQuery();
+	
 	
 
 %>
@@ -50,6 +44,67 @@
 	statsRs = statsStmt.executeQuery();
 	
 	
+
+%>
+<%
+	//페이징
+	
+	//1.페이지 번호 넘기기 -> 페이지 1 -> 최신 10개글
+	
+	//페이지 값 받기 -> 
+	int currentPage = 1;
+	//null이 아니면 값이 넘어온 것이다 ->즉 페이지 번호가 넘어온것
+	if(request.getParameter("currentPage") != null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	
+	int rowPerPage = 10; //한페이지당 글 6개씩 출력
+	
+	//전체 행 갯수를 가져오기 (즉 전체 글 갯수) 쿼리 -> select count(*) from diary;
+	//전체글 갯수/한페이지당 글 개수 => 나머지가 0이면 몫-> 페이지 갯수
+	//나머지가 0이아니면 몫+1 => 페이지 갯수
+	
+	String sql = "select count(*) from diary";
+
+	//db자원 초기화
+	PreparedStatement countStmt= null; //페이지에서 쿼리를 두개 실행할 계획 
+	ResultSet countRs = null;
+	
+	
+	countStmt = con.prepareStatement(sql);
+	countRs = countStmt.executeQuery();
+	
+	int totalRow = 0;
+	//읽어올 행이 있을 경우에 totalRow -> count(*) 즉 전체 행갯수 반환
+	if(countRs.next()){
+		totalRow = countRs.getInt("count(*)");
+	}
+	//디버깅
+	System.out.println(totalRow +"<-totalRow Diary list");
+	
+	int lastPage = totalRow/rowPerPage;
+	if(totalRow%rowPerPage != 0){
+		lastPage = lastPage +1; //나머지가 0이 아니면 페이지 갯수= 몫+1;
+	}
+	System.out.println(lastPage +"<-lastPage Diary list ");
+	
+	
+	//2. 페이징 한 페이지에 6개씩, 페이지가 넘어가면 다음 10개글 가져오기
+	//1페이지 -> limit 0,10 , 2페이지 ->10,10 ----
+	int limitSkip = ((currentPage-1)* rowPerPage);
+	
+	System.out.println(limitSkip);
+	
+	//날짜 목록 전체 출력
+		String lunchSql2 = "select lunch_date lunchDate, menu,create_date,comment from lunch order by lunch_date desc limit ?,?";
+		PreparedStatement lunchStmt2 = null;
+		ResultSet lunchRs2 = null;
+		lunchStmt2 = con.prepareStatement(lunchSql2);
+		lunchStmt2.setInt(1,limitSkip);
+		lunchStmt2.setInt(2,rowPerPage);
+		System.out.println(lunchStmt2);
+		lunchRs2 = lunchStmt2.executeQuery();
+
 
 %>
 
@@ -150,9 +205,9 @@ body{
 				}
 				statsRs.beforeFirst();
 	%>
-	<div class="mb-5 mt-5 ">전체 투표수 : <%=(int)totalCnt%></div>
+	<div class="mb-5 mt-5 text-center" >전체 투표수 : <%=(int)totalCnt%></div>
 	<div class="text-center ps-5"  style='width:50%; float:left;'>
-	<table >
+	<table style="margin:auto; padding:auto;">
 		<tr>
 			<%	
 				String [] c = {"#FF0000","#FE2EF7","#58FAF4","#2EFE64","#F4FA58"};
@@ -183,7 +238,7 @@ body{
 	
 	</div>
 	<div style='width:50%; float:right;'>
-	<table class="class-start">
+	<table class="class-start" style="margin:auto; padding:auto;">
 					<tr>
 						<td><b>날짜</b></td>
 						<td><b>메뉴</b></td>
@@ -196,7 +251,8 @@ body{
 				
 					<tr>
 						<td><%=lunchRs2.getString("lunchDate")%></td>
-						<td>&nbsp;<%=lunchRs2.getString("menu")%></td>
+						<td><a href="./lunchOne.jsp?lunchDate=<%=lunchRs2.getString("lunchDate")%>">&nbsp;<%=lunchRs2.getString("menu")%>
+						</a></td>
 						<td><%=lunchRs2.getString("comment")%></td>
 						
 					</tr>
@@ -207,6 +263,51 @@ body{
 		
 		%>
 	</table>
+	
+	<!-- 페이징 넘기기-->
+				<div class="text-center mt-2"><%=currentPage%></div>
+				<br>
+				<!-- 페이징 버튼 -->
+				<nav>
+				<ul class="pagination justify-content-center">
+				
+				
+				<%
+					if(currentPage > 1){
+				
+				%>
+					<li class="page-item"><a href="./statsLunch.jsp?currentPage=1" class="page-link">처음 페이지</a></li>
+					<li class="page-item"><a href="./statsLunch.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a></li>
+				<%
+					}else{
+				%>	
+					<li class="page-item disabled"><a href="./statsLunch.jsp?currentPage=1" class="page-link">처음 페이지</a></li>
+					<li class="page-item disabled"><a href="./statsLunch.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a></li>
+					
+				<%	
+					}
+					if(currentPage<lastPage){
+				%>
+					<li class="page-item"><a href="./statsLunch.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a></li>
+					<li class="page-item"><a href="./statsLunch.jsp?currentPage=<%=lastPage%>" class="page-link">마지막 페이지</a></li>
+				<%
+					}else{
+						
+				%>
+					<li class="page-item disabled"><a href="./statsLunch.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a></li>
+					<li class="page-item disabled"><a href="./statsLunch.jsp?currentPage=<%=lastPage%>" class="page-link">마지막 페이지</a></li>
+				
+				<% 
+					}
+				
+				%>
+				
+				</ul>
+				</nav>
+		
+		
+		</div>
+	
 	
 	</div>
 	
