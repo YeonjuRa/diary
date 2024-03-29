@@ -5,7 +5,7 @@
 	//0순위.로그인 분기 -> 인증 분기
 	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "ON" -> redirect(diary.jsp)
 	
-	//받아올 데이터 :연도 월
+
 	
 	//db연결
 	/* Class.forName("org.mariadb.jdbc.Driver");
@@ -59,8 +59,6 @@
 	//1.요청값 분석
 	String errMsg = request.getParameter("errMsg");
 	
-	
-	//test
 	
 
 %>
