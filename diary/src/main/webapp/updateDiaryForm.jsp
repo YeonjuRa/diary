@@ -5,8 +5,6 @@
 	//로그인 분기 -> 인증 분기
 	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "OFF" -> redirect(loginForm.jsp)
 	
-	//받아올 데이터 :연도 월
-	
 	//db연결
 	Class.forName("org.mariadb.jdbc.Driver");
 	
@@ -22,8 +20,6 @@
 			//param 값으로 넘기기 위해 한글 값 인코딩 맞춰주기
 			response.sendRedirect("/diary/loginForm.jsp?errMsg="+errMsg);
 			return;
-		}else{
-			System.out.println(loginMember);
 		}
 		
 
@@ -166,7 +162,7 @@ body{
 				<td>기분:</td>
 				<td>
 				<%
-					if(rs.getString("feeling").equals("&#128512")){
+					if(rs.getString("feeling").equals("&#128512") || rs.getString("feeling").equals("😀")){
 				%>		
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128512" checked>&#128512
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128530">&#128530
@@ -174,7 +170,7 @@ body{
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128557">&#128557	
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128564">&#128564
 				<% 
-					}else if(rs.getString("feeling").equals("&#128530")){
+					}else if(rs.getString("feeling").equals("&#128530") || rs.getString("feeling").equals("😒")){
 				%>	
 					
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128512">&#128512
@@ -183,7 +179,7 @@ body{
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128557">&#128557	
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128564">&#128564
 					<%
-					}else if(rs.getString("feeling").equals("&#128528")){ 
+					}else if(rs.getString("feeling").equals("&#128528") || rs.getString("feeling").equals("😐")){ 
 					%>
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128512">&#128512
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128530">&#128530
@@ -191,7 +187,7 @@ body{
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128557">&#128557	
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128564">&#128564
 					<% 
-					}else if(rs.getString("feeling").equals("&#128557")){
+					}else if(rs.getString("feeling").equals("&#128557") || rs.getString("feeling").equals("😭")){
 					%>
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128512">&#128512
 						<input type="radio" name="feeling" style="border-radius:10px;" value="&#128530">&#128530

@@ -11,8 +11,6 @@
 		//param 값으로 넘기기 위해 한글 값 인코딩 맞춰주기
 		response.sendRedirect("/diary/loginForm.jsp?errMsg="+errMsg);
 		return;
-	}else{
-		System.out.println(loginMember);
 	}
 	
 	
