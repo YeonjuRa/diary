@@ -16,9 +16,20 @@
 
 
 -- diary 데이터베이스 구조 내보내기
-DROP DATABASE IF EXISTS `diary`;
 CREATE DATABASE IF NOT EXISTS `diary` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `diary`;
+
+-- 테이블 diary.comment 구조 내보내기
+CREATE TABLE IF NOT EXISTS `comment` (
+  `comment_no` int(11) NOT NULL AUTO_INCREMENT,
+  `diary_date` date NOT NULL,
+  `memo` text NOT NULL,
+  `update_date` text NOT NULL,
+  `create_date` text NOT NULL,
+  PRIMARY KEY (`comment_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- 내보낼 데이터가 선택되어 있지 않습니다.
 
 -- 테이블 diary.diary 구조 내보내기
 CREATE TABLE IF NOT EXISTS `diary` (
@@ -49,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `lunch` (
   `lunch_date` date NOT NULL,
   `menu` varchar(50) NOT NULL,
   `update_date` datetime NOT NULL,
+  `comment` text NOT NULL,
   `create_date` datetime NOT NULL,
   PRIMARY KEY (`lunch_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
