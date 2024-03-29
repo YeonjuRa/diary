@@ -3,10 +3,19 @@
 <%@ page import="java.net.*" %>
 
 <%
-	//로그인 분기 -> 인증 분기
-	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "OFF" -> redirect(loginForm.jsp)
 	
-	//받아올 데이터 :연도 월
+	
+	//로그인 세션분기
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
+		String errMsg = URLEncoder.encode("잘못된 접근 입니다. 로그인 해주세요.","utf-8");
+		//param 값으로 넘기기 위해 한글 값 인코딩 맞춰주기
+		response.sendRedirect("/diary/loginForm.jsp?errMsg="+errMsg);
+		return;
+	}else{
+		System.out.println(loginMember);
+		
+	}
 	
 	//db연결
 	Class.forName("org.mariadb.jdbc.Driver");
@@ -16,22 +25,7 @@
 	Connection con = null;
 	con = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", 
 			"root", "java1234");
-	PreparedStatement sessionStmt= null;
-	ResultSet sessionRs = null;
-	sessionStmt = con.prepareStatement(sessionSql);
-	sessionRs = sessionStmt.executeQuery();
-	String mySession = null;
-	if(sessionRs.next()){
-		mySession = sessionRs.getString("mySession"); //sql에서 my_session값을 가져오기 ->알리오스 이름으로 가져오기
-		
-	}
-	if(mySession.equals("OFF")){
-		String errMsg = URLEncoder.encode("잘못된 접근 입니다. 로그인 해주세요.","utf-8");
-		//param 값으로 넘기기 위해 한글 값 인코딩 맞춰주기
-		response.sendRedirect("/diary/loginForm.jsp?errMsg="+errMsg);
-		return;  // off 시 코드 진행 끝내기  -> ex)메서드 끝낼때 return 사용
-	}
-		
+	
 	//글 입력 sql
 	String checkDate = request.getParameter("checkDate");
 	if(checkDate == null){ //그냥 이파일을 실행할경우 ""
@@ -151,8 +145,9 @@ body{
 	<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 	
 	</div>
-	<div class="text-right mt-2">최근 로그인: <%=sessionRs.getString("on_date")%></div>
-	<div class="text-right mb-2">최근 로그아웃: <%=sessionRs.getString("off_date")%></div>
+	<div class="text-right mt-2"><%=loginMember%>님이 접속 중 </div>
+	<div class="text-right mt-2">최근 로그인: </div>
+	<div class="text-right mb-2">최근 로그아웃: </div>
 	</div>
 	<!--사이드 바 종료  -->
 	

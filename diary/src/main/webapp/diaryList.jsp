@@ -16,8 +16,7 @@
 		System.out.println(loginMember);
 		
 	}
-	
-	//받아올 데이터 :연도 월
+
 	
 
 %>
@@ -188,6 +187,7 @@
 		<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 		
 		</div>
+		<div class="text-right mt-2"><%=loginMember%>님이 접속 중 </div>
 		<div class="text-right mt-2">최근 로그인: </div>
 		<div class="text-right mb-2">최근 로그아웃: </div>
 		</div>
