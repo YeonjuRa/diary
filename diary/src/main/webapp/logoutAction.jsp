@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.net.*"%>
 <%
-	request.setCharacterEncoding
+	/* request.setCharacterEncoding
 	("utf-8");
 	// 0. 로그인(인증) 분기
 	// diary.login.my_session => 'ON' => redirect("diary.jsp")
@@ -26,7 +26,7 @@
 		response.sendRedirect("/diary/loginForm.jsp?errMsg="+errMsg);
 		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼때 return사용
 	}
-
+	//세션 사용시 on_Date, off_date는 남길 수 없다//세션 -> DB 로 연동해줘야함
 	
 	// 1. 요청값 분석
 	
@@ -39,16 +39,19 @@
 		
 	if(row == 1 ){
 		
-			System.out.println("Session OFF");	
-			response.sendRedirect("/diary/loginForm.jsp");
-	}else{
+			System.out.println("Session OFF");	 */
+			
+	/* }else{
 		System.out.println("로그아웃 실패");
 		response.sendRedirect("/diary/diary.jsp");
-	}
+	} */
 	
+	//세션 로그아웃
+	/* session.removeAttribute("loginMember"); */
+
+	session.invalidate(); //세션공간 초기화 (포맷)
+
+	response.sendRedirect("./loginForm.jsp");
 	
-	stmt3.close();
-	
-	conn.close();
 %>
 

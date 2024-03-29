@@ -3,7 +3,7 @@
 <%@ page import="java.net.*" %>
 
 <%
-//로그인 분기 -> 인증 분기
+	//로그인 분기 -> 인증 분기
 	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "OFF" -> redirect(loginForm.jsp)
 	
 	//받아올 데이터 :연도 월
@@ -56,7 +56,7 @@
 
 %>
 <%
-	String fromBoard = request.getParameter("lunchDate");
+
 	//메뉴 확인 sql
 	String lunchSql = "select lunch_date lunchDate, menu,create_date,comment from lunch where lunch_date=?";
 	PreparedStatement lunchStmt = null;

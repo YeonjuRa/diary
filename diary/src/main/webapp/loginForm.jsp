@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
-<%@ page import="java.net.URLEncoder" %>
+<%-- <%@ page import="java.sql.*" %>
+<%@ page import="java.net.URLEncoder" %> --%>
 <%
 	//0순위.로그인 분기 -> 인증 분기
 	///diary.login.my_session  -> 디비 이름.테이블이름.columm이름 => "ON" -> redirect(diary.jsp)
@@ -8,7 +8,7 @@
 	//받아올 데이터 :연도 월
 	
 	//db연결
-	Class.forName("org.mariadb.jdbc.Driver");
+	/* Class.forName("org.mariadb.jdbc.Driver");
 	
 	String sessionSql = "select my_session mySession from login";
 	//자원 초기화
@@ -19,8 +19,9 @@
 	ResultSet sessionRs = null;
 	sessionStmt = con.prepareStatement(sessionSql);
 	sessionRs = sessionStmt.executeQuery();
-	String mySession = null;
-	if(sessionRs.next()){
+	String mySession = null; */   //DB사용해서 로그인 하기
+	/* 
+/* 	if(sessionRs.next()){
 		mySession = sessionRs.getString("mySession"); //sql에서 my_session값을 가져오기 ->알리오스 이름으로 가져오기
 		
 	}
@@ -33,7 +34,28 @@
 			sessionRs.close();
 			sessionStmt.close();
 			con.close();
-			
+			 */
+	
+	//로그인 방식 세션으로 변경
+	//로그인에 성공시 세션에 loginMember 라는 변수를 생성하고 값으로 로그인 아이디를 변수에 저장한다.
+	
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	//getAttribute () => 찾는 변수가 없으면 null값을 반환한다.
+	//null이 아니라는 말은 로그인 한 적이 있다는 뜻이다//
+	System.out.println(loginMember + "<-loginMember");
+	
+	
+	//즉 분기문은 null이냐 null 이 아니냐로 분기
+	if(loginMember != null){
+		//로그인 상태
+		response.sendRedirect("/diary/diary.jsp");
+		return;
+	}
+	
+	//로그인 페이지는 로그아웃 상태에서맘ㄴ 들어옮 수 있다.
+	
+	//로그아웃 -> 톰갯 서버 스톱하고 클린하기 -> 제일 간단한 방법
+	
 	//1.요청값 분석
 	String errMsg = request.getParameter("errMsg");
 	
