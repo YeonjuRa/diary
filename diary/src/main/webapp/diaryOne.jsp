@@ -15,7 +15,7 @@
 	}else{
 		System.out.println(loginMember);
 	}
-	
+	 
 	//db연결
 	Class.forName("org.mariadb.jdbc.Driver");
 	
@@ -146,11 +146,11 @@ body{
 	<div class="col-9 justify-content-center mt-2 pb-4 ">
 		<div style="background-color:#1D274D; color:white; padding:10px; border-radius:7px;">
 		<h1 class="text-center">일기 보기</h1>
-		
 		</div>
+		
 		<hr>
 		<div class="d-flex justify-content-center">
-		<table style="width:600px; height:400px; background-color:#1D274D;padding:30px;border-radius:10px;" class="mt-5">
+		<table style="width:600px; height:400px; background-color:#1D274D;padding:20px;border-radius:10px;" class="mt-1">
 			<%
 				if(oneRs.next()){
 			%>
@@ -191,16 +191,54 @@ body{
 		</table>
 			
 		</div>
-			<div class="text-center mt-5">
+		
+		<div class="text-center mt-3 mb-3">
 			<a href="./updateDiaryForm.jsp?diaryDate=<%=diaryDate%>" class="btnn">일기 수정하기</a>
 			<a href="./diaryList.jsp" class="btnn">돌아가기</a>
 			<a href="./deleteDiaryAction.jsp?diaryDate=<%=diaryDate%>" class="btnn">일기 삭제하기</a>
-			</div>
+		</div>
+			
+		<div style="width:50%; float:left;">
+			<form class="text-center mt-2 ms-2" method="post" action="addCommentAction.jsp">
+				<input type="hidden" name="diaryDate" value="<%=diaryDate%>">
+				<textarea rows="5" cols="30" name="memo">댓글 입력</textarea>
+				<br>
+				<button type="submit" class="btnn">댓글 달기</button>
+			</form>
+		</div>
+		<%
+			String sql2 = "select comment_no, memo,create_date,update_date from comment where diary_date=? order by comment_no desc";
+			PreparedStatement stmt2 = null;
+			ResultSet rs2 = null;
+			stmt2 = con.prepareStatement(sql2);
+			stmt2.setString(1,diaryDate);
+			rs2 = stmt2.executeQuery();
+		
+		%>
+		<table style="width:50%; float:right;" class="text-center mt-3">
+		<%
+			while(rs2.next()){
+		%>	
+			<tr>
+				<td style="color:black"><%=rs2.getString("memo") %></td>
+				<td style="color:black"><%=rs2.getString("create_date") %></td>
+				<td style="color:black"><a href="./deleteComment.jsp?diaryDate=<%=diaryDate%>&commentNo=<%=rs2.getString("comment_no")%>">삭제</a></td>
+			</tr>
+			
+		<% 	
+			}
+		
+		
+		%>
+		</table>
+		
+		
+		</div>
+		
+		</div>
 	</div>
-
-	</div>
-
-	</div>
+		
+		
 	<footer class="container d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top fw-bold">
     	<p class="col-md-4 mb-0 text-muted" style="color:white;">&copy;2024 Goodee Academy</p>
     	<ul class="nav col-md-4 justify-content-end">

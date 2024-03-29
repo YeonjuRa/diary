@@ -99,6 +99,8 @@
 		lunchStmt2.setInt(2,rowPerPage);
 		System.out.println(lunchStmt2);
 		lunchRs2 = lunchStmt2.executeQuery();
+		
+		
 
 
 %>
@@ -243,11 +245,12 @@ body{
 					</tr>
 		<%
 			while(lunchRs2.next()){
+			
 		%>
 				
 					<tr>
 						<td><%=lunchRs2.getString("lunchDate")%></td>
-						<td><a href="./lunchOne.jsp?lunchDate=<%=lunchRs2.getString("lunchDate")%>">&nbsp;<%=lunchRs2.getString("menu")%>
+						<td><a href="./lunchOne.jsp?checkDate=<%=lunchRs2.getString("lunchDate")%>&ck=F">&nbsp;<%=lunchRs2.getString("menu")%>
 						</a></td>
 						<td><%=lunchRs2.getString("comment")%></td>
 						

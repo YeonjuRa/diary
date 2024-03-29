@@ -183,6 +183,8 @@
 		<!-- 로그인 정보,리스트로 보기 메뉴 -->
 		<div class="text-end me-2 pt-2"><a href="./addDiaryForm.jsp">일기 쓰기!</a></div>
 		<div class="text-end me-2"><a href="./diary.jsp">캘린더 보기</a></div>
+		<div class="text-end me-2"><a href="./lunchOne.jsp">오늘 점심 투표하기!</a></div>
+		<div class="text-end me-2 pt-2"><a href="./statsLunch.jsp">점심 통계 확인하기!</a></div>
 		<div class="text-end me-2"><a href="./diaryList.jsp">리스트로 보기</a></div>
 		<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 		

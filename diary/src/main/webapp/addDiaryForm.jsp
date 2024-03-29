@@ -111,7 +111,7 @@ body{
 	<div class="mt-2 border-black border-end border-3" style="width:280px; height:300px;">
 	<!-- 로그인 정보,리스트로 보기 메뉴 -->
 	<div class="text-end me-2 pt-2"><a href="./diary.jsp">돌아가기</a></div>
-
+	
 	<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 	
 	</div>

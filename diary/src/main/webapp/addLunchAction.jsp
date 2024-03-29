@@ -58,7 +58,7 @@
 		System.out.println("입력실패");
 	}
 	
-	response.sendRedirect("./diary.jsp");
+	response.sendRedirect("./statsLunch.jsp");
 	//성공/실패 시 리스트 페이지로 리다이렉트
 	
 

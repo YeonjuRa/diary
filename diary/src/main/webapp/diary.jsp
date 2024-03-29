@@ -74,6 +74,8 @@
 	
 	listRs = stmt2.executeQuery(); //현재 타겟달의 모든 일기가 들어가있다
 	//listRs.first();   //비교값 일치시 다음 비교를 위해서 커서로 처음으로 돌린다.
+	
+	
 
 
 %>
@@ -188,6 +190,7 @@
 	<div class="text-end me-2"><a href="./diary.jsp">캘린더 보기</a></div>
 	<div class="text-end me-2"><a href="./diaryList.jsp">리스트로 보기</a></div>
 	<div class="text-end me-2"><a href="./lunchOne.jsp">오늘 점심 투표하기!</a></div>
+	<div class="text-end me-2 pt-2"><a href="./statsLunch.jsp">점심 통계 확인하기!</a></div>
 	<div class="text-end me-2"><a href="./logoutAction.jsp">로그아웃</a></div>
 	
 	</div>
@@ -254,6 +257,7 @@
 					
 					<div>
 					<span><%=listRs.getString("feeling")%></span>
+				
 					<a href='/diary/diaryOne.jsp?diaryDate=<%=listRs.getString("diaryDate")%>'>
 					<img class="imgIcon" src="./icon.png"></a>
 				
